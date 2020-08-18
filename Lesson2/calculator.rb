@@ -1,28 +1,99 @@
 # ask user for two numbers
-# ask  user for and operation to preform
-# preform operation on the two numbers 
+# ask user for and operation to preform
+# preform operation on the two numbers
 # output result
 
-puts "~Welcome to Calculator~"
+# prompt so we dont have to add >> for each output to user
+def prompt(message)
+  puts ">> #{message}"
+end
 
-puts "What is the first number?"
-number1 = gets.chomp
+def valid?(num)
+  num.to_i != 0
+end
 
-puts "What is the second number?"
-number2 = gets.chomp
+def operator_to_message(choice)
+  case choice
+  when '1'
+    'Adding'
+  when '2'
+    'Subtracting'
+  when '3'
+    'Muliplying'
+  when '4'
+    'Dividing'
+  end
+end
 
-puts "What operation would you like to preform? 1) addition 2) subtraction 3) multiply 4) divide"
-operator = gets.chomp
+prompt 'Welcome to Calculator! Please enter your name: '
 
-if operator == '1'
-  result = number1.to_i + number2.to_i
-elsif operator == '2'
-  result = number1.to_i - number2.to_i
-elsif operator == '3'
-  result = number1.to_i * number2.to_i
-else 
-  result =number1.to_f / number2.to_f
-end 
+name = ''
+loop do
+  name = gets.chomp
+  break unless name.empty
+end
 
-puts "The result is #{result}"
+prompt "Hi #{name}"
 
+loop do # main loop
+  number1 = '' # initialize outside of the loop so it is accessible
+  loop do
+    prompt 'What is the first number?'
+    number1 = gets.chomp
+
+    if valid?(number1)
+      break
+    else
+      prompt "Hmm... that doesnt look like a valid number"
+    end
+  end
+
+  number2 = ''
+  loop do
+    prompt "What is the second number?"
+    number2 = gets.chomp
+    if valid?(number2)
+      break
+    else
+      promt "Hmm... that doesnt look like a valid number"
+    end
+  end
+  operator_prompt = <<-MSG
+   "What operation would you like to preform?
+  1) addition
+  2) subtraction
+  3) multiplication
+  4) division"
+  MSG
+
+  prompt operator_prompt
+
+  operator = ''
+  loop do
+    operator = gets.chomp
+    if %w[1 2 3 4].include?(operator)
+      break
+    else
+      prompt "Must put 1, 2, 3, or 4"
+    end
+  end
+
+  prompt "#{operator_to_message(operator)} the two numbers..."
+
+  result = case operator
+           when '1'
+             number1.to_i + number2.to_i
+           when '2'
+             number1.to_i - number2.to_i
+           when '3'
+             number1.to_i * number2.to_i
+           when '4'
+             number1.to_f / number2.to_i
+           end
+
+  prompt "The result is #{result}"
+  prompt 'Do you want to preform another calculation?(Y to calculate again)'
+  answer = gets.chomp.downcase
+  break unless answer.start_with?('y')
+end
+prompt 'Thank you for using calculator. Goodbye!'
