@@ -8,8 +8,16 @@ def prompt(message)
   puts ">> #{message}"
 end
 
-def valid?(num)
-  num.to_i != 0
+def integer?(input)
+  input.to_i.to_s == input && amount.to_i > 0
+end
+
+def float?(input)
+  input.to_f.to_s == input && amount.to_f > 0
+end
+
+def number?(input)
+  (integer?(input) || float?(input)) && (amount.to_f > 0 || && amount.to_i > 0)
 end
 
 def operator_to_message(choice)
@@ -30,7 +38,7 @@ prompt 'Welcome to Calculator! Please enter your name: '
 name = ''
 loop do
   name = gets.chomp
-  break unless name.empty
+  break unless name.empty?
 end
 
 prompt "Hi #{name}"
@@ -41,7 +49,9 @@ loop do # main loop
     prompt 'What is the first number?'
     number1 = gets.chomp
 
-    if valid?(number1)
+    if integer?(number1)
+      break
+    elsif number?(number1)
       break
     else
       prompt "Hmm... that doesnt look like a valid number"
@@ -52,10 +62,13 @@ loop do # main loop
   loop do
     prompt "What is the second number?"
     number2 = gets.chomp
-    if valid?(number2)
+    if integer?(number2)
+      break
+    elsif
+      number?(number2)
       break
     else
-      promt "Hmm... that doesnt look like a valid number"
+      prompt "Hmm... that doesnt look like a valid number"
     end
   end
   operator_prompt = <<-MSG
