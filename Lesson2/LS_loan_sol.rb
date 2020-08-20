@@ -79,3 +79,83 @@ end
 
 
 
+def yr_to_mon_interest(interest)
+  (interest.to_f / 12) * 10**-2
+end
+
+def year_to_months(years)
+  years * 12
+end
+
+
+
+loan_amount = ''
+loop do
+  prompt 'Enter loan amount: '
+  loan_amount = gets.chomp
+  if integer?(loan_amount) && (loan_amount.to_i).positive?
+    break
+  elsif float?(loan_amount)
+    break
+  else
+    prompt 'Please enter a positive number value.'
+  end
+end
+loan_amount = loan_amount.to_f
+
+interest_apr = ''
+loop do
+  prompt 'Enter apr: '
+  prompt("(Example: 5 for 5% or 2.5 for 2.5%)")
+  interest_apr = gets.chomp
+  if integer?(interest_apr) 
+    break
+  elsif float?(interest_apr)
+    break
+  else
+    prompt 'Please enter a positive number value.'
+  end
+end
+interest_monthly = yr_to_mon_interest(interest_apr)
+
+term_months = ''
+term_option = ''
+loop do
+  loan_term_prompt = <<-MSG
+  "Is the loan term in years or months?"
+  1) months
+  2) years
+  MSG
+
+  prompt loan_term_prompt
+
+  term_option = gets.chomp
+  if %w[1 2].include?(term_option)
+  else
+    puts ' Must enter 1 or 2.'
+  end
+
+  prompt 'What is the duration of the loan?'
+  term_months = gets.chomp
+  if integer?(term_months)
+  elsif float?(term_months)
+  else
+    prompt 'Please enter a positive number value.'
+  end
+
+  if term_option == '1'
+    term_months = term_months.to_f
+  else
+    term_months = year_to_months(term_months.to_f)
+  end
+  break
+end
+
+monthly_payment = (loan_amount * (interest_monthly /
+                  (1 - (1 + interest_monthly)**(-term_months)))).round(2)
+
+prompt("Your monthly payment is: $#{monthly_payment}")
+
+prompt("Thank you for using the Mortgage Calculator!")
+
+prompt("Good bye!")
