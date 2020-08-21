@@ -15,7 +15,6 @@ def float?(input)
   input.to_f.to_s == input && input.to_f > 0
 end
 
-
 def number?(input)
   float?(input) || integer?(input)
 end
@@ -73,7 +72,11 @@ def get_duration_months(duration_input)
       prompt(MESSAGES['valid_number'])
     end
   end
-  duration_input == "months"? time.to_i : time.to_i * 12
+  duration_input == "months" ? time.to_i : time.to_i * 12
+end
+
+def get_monthly_payment(loan, arp, duration)
+  (loan * (arp / (1 - (1 + arp)**-duration))).round(2)
 end
 
 def valid_new_loan
@@ -81,14 +84,13 @@ def valid_new_loan
   loop do
     prompt(MESSAGES['new_loan'])
     answer = gets.chomp
-    puts ''
     if answer == 'y'
-      clear_screen 
+      clear_screen
       break
     elsif answer == 'n'
       break
-    else prompt(MESSAGES['new_loan_responce'])
-    puts ''
+    else
+      prompt(MESSAGES['new_loan_responce'])
     end
   end
   answer
@@ -104,7 +106,7 @@ name = ''
 loop do
   name = gets.chomp.strip.capitalize
   break unless name.empty?
-  prompt(MESSAGES['valid_name']) 
+  prompt(MESSAGES['valid_name'])
 end
 
 prompt "Welcome #{name}"
@@ -114,15 +116,10 @@ loop do
   loan = get_loan_amount
   arp = get_arp
   duration = get_duration_months(months_or_years)
-
-  monthly_payment = (loan * (arp / (1 - (1 + arp)**-duration))).round(2)
-  prompt "Your monthly payment will be #{monthly_payment}"
-  puts ''
-
+  monthly_payment = get_monthly_payment(loan, arp, duration)
+  prompt "Your monthly payment will be #{monthly_payment}."
   break if valid_new_loan == 'n'
 end
-
-
 
 prompt "Thank you for using Loan Calculator, #{name}."
 puts ''
