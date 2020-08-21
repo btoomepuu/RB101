@@ -117,6 +117,7 @@ loop do
   arp = get_arp
   duration = get_duration_months(months_or_years)
   monthly_payment = get_monthly_payment(loan, arp, duration)
+  puts ''
   prompt "Your monthly payment will be #{monthly_payment}."
   break if valid_new_loan == 'n'
 end
