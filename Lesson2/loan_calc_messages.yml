@@ -1,9 +1,10 @@
 ---
 welcome: "Welcome to Loan Calculator! Please enter your name"
 loan_amount: "Please enter your loan amount."
-valid_number: "Please enter a positive number value."
 months_years: "Is the loan duration in months or years? Please enter
     months or years."
 valid_month_year: "Please enter months or years."    
 get_apr: "Please enter your APR.(ex. for 6.5% enter 6.5)"
 new_loan: "Would you like to enter a new loan? (y/n)"
+new_loan_responce: "Please enter y or n."
+valid_number: "Invalid input, please try again."

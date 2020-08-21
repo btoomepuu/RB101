@@ -1,5 +1,5 @@
 # program to calculate monthly loan payment
-
+require "pry"
 require 'yaml'
 MESSAGES = YAML.load_file('loan_calc_messages.yml')
 
@@ -11,8 +11,13 @@ def integer?(input)
   input.to_i.to_s == input && input.to_i > 0
 end
 
+def float?(input)
+  input.to_f.to_s == input && input.to_f > 0
+end
+
+
 def number?(input)
-  input.to_f > 0
+  float?(input) || integer?(input)
 end
 
 def get_loan_amount
@@ -44,16 +49,15 @@ def get_arp
 end
 
 def months_or_years
+  prompt(MESSAGES['months_years'])
   loop do
-    prompt(MESSAGES['months_years'])
     duration_input = gets.chomp.downcase
     if duration_input == 'months'
       break duration_input
     elsif duration_input == 'years'
       break duration_input
     else
-      prompt(MESSAGES['valid_months_years'])
-      puts ''
+      prompt(MESSAGES['valid_month_year'])
     end
   end
 end
@@ -64,18 +68,34 @@ def get_duration_months(duration_input)
     prompt "How many #{duration_input}?"
     time = gets.chomp
     if integer?(time)
-      break time = time.to_i
+      break
     else
       prompt(MESSAGES['valid_number'])
     end
   end
-  case duration_input
-  when 'months'
-    time = time
-  when 'years'
-    time *= 12
+  duration_input == "months"? time.to_i : time.to_i * 12
+end
+
+def valid_new_loan
+  answer = ''
+  loop do
+    prompt(MESSAGES['new_loan'])
+    answer = gets.chomp
+    puts ''
+    if answer == 'y'
+      clear_screen 
+      break
+    elsif answer == 'n'
+      break
+    else prompt(MESSAGES['new_loan_responce'])
+    puts ''
+    end
   end
-  time
+  answer
+end
+
+def clear_screen
+  system('clear') || system('cls')
 end
 
 prompt(MESSAGES['welcome'])
@@ -84,6 +104,7 @@ name = ''
 loop do
   name = gets.chomp.strip.capitalize
   break unless name.empty?
+  prompt(MESSAGES['valid_name']) 
 end
 
 prompt "Welcome #{name}"
@@ -98,10 +119,10 @@ loop do
   prompt "Your monthly payment will be #{monthly_payment}"
   puts ''
 
-  prompt(MESSAGES['new_loan'])
-  answer = gets.chomp.downcase
-  break unless answer == 'y'
+  break if valid_new_loan == 'n'
 end
+
+
 
 prompt "Thank you for using Loan Calculator, #{name}."
 puts ''
