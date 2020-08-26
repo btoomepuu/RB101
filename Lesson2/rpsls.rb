@@ -10,7 +10,7 @@ OPTIONS = {
   "p" => 'paper',
   "ss" => 'scissors',
   "l" => 'lizard',
-   "s" => "spock"
+  "s" => "spock"
 }
 
 WIN_OPTIONS = {
@@ -65,7 +65,8 @@ def valid_choice?(player_choice)
 end
 
 def display_choices(name_hash, p_input, c_input)
-  prompt "You chose #{name_hash[p_input]} and the computer chose #{name_hash[c_input]}"
+  prompt "You chose #{name_hash[p_input]} and the computer
+  chose #{name_hash[c_input]}"
   pause
 end
 
