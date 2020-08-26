@@ -1,0 +1,17 @@
+---
+#MESSAGES['player_choice']
+display_welcome: 'Welcome to Rock-Paper-Scissors-Lizard-Spock.'
+display_rules: 'You will be playing against the computer. First to 5 wins!
+
+=> Rules: Scissors cuts Paper, Paper covers Rock, Rock crushes Lizard,
+Lizard posions Spock, Spock smashes Scissors, Scissors decapitates Lizard, Lizard eats Paper, Paper disproves Spock, Spock vaporizes Rock.'
+choice: 'r: rock, p: paper, ss: scissors, l:lizard, s: spock'
+valid_choice: 'Please enter a valid choice.'
+player_round: 'You won the round!'
+computer_round: 'The computer won the round!'
+player_win: 'You won the game!'
+computer_win: 'The computer won the game!'
+new_game: 'Would you like to play again?'
+valid_new_game: 'Invalid input. Please enter y, yes, n, or no.'
+display_goodbye: 'Thank you for playing Rock-Paper-Scissors-Lizard-Spock!'
+new_screen: 'Start New Game'

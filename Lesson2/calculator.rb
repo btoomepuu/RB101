@@ -9,15 +9,15 @@ def prompt(message)
 end
 
 def integer?(input)
-  input.to_i.to_s == input && amount.to_i > 0
+  input.to_i.to_s == input && input.to_i > 0
 end
 
 def float?(input)
-  input.to_f.to_s == input && amount.to_f > 0
+  input.to_f.to_s == input && input.to_f > 0
 end
 
 def number?(input)
-  (integer?(input) || float?(input)) && (amount.to_f > 0 || && amount.to_i > 0)
+  integer?(input) || float?(input)
 end
 
 def operator_to_message(choice)
@@ -49,7 +49,7 @@ loop do # main loop
     prompt 'What is the first number?'
     number1 = gets.chomp
 
-    if integer?(number1)
+     if integer?(number1)
       break
     elsif number?(number1)
       break
