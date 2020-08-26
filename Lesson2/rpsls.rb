@@ -4,6 +4,15 @@ MESSAGES = YAML.load_file('rps_messages.yml')
 
 VALID_CHOICES = %w(r p ss l s)
 WIN_SCORE = 5
+
+OPTIONS = {
+  "r" => 'rock',
+  "p" => 'paper',
+  "ss" => 'scissors',
+  "l" => 'lizard',
+   "s" => "spock"
+}
+
 WIN_OPTIONS = {
   "r" => ["ss", "l"],
   "p" => ["s", "r"],
@@ -55,8 +64,9 @@ def valid_choice?(player_choice)
   end
 end
 
-def display_choices(p_input, c_input)
-  prompt "You chose: #{p_input}; Computer chose: #{c_input}"
+def display_choices(name_hash, p_input, c_input)
+  prompt "You chose #{name_hash[p_input]} and the computer chose #{name_hash[c_input]}"
+  pause
 end
 
 def win?(first, second)
@@ -132,7 +142,7 @@ loop do
   until scores[:player] == WIN_SCORE || scores[:computer] == WIN_SCORE
     player_choice = get_player_choice
     computer_choice = get_computer_choice
-    display_choices(player_choice, computer_choice)
+    display_choices(OPTIONS, player_choice, computer_choice)
     pause
     display_winner(player_choice, computer_choice)
     pause
